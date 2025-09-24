@@ -50,7 +50,7 @@ const Nav = () => {
 
   return (
     <div>
-      <div className="absolute top-0 w-380 z-50 h-17 text-white flex items-center px-8 py-4 justify-between shadow-xl bg-gradient-to-br backdrop-blur-sm border-b-zinc-700 border-b-1 font-[font1] text-lg tracking-wide">
+      <div className="absolute top-0 w-screen z-50 h-17 text-white flex items-center px-8 py-4 justify-between shadow-xl bg-gradient-to-br backdrop-blur-sm border-b-zinc-700 border-b-1 font-[font1] text-lg tracking-wide">
         <div className="flex items-center gap-30 mr-20">
           {/* Explore */}
           <button
@@ -297,7 +297,7 @@ const Nav = () => {
 
       {/* MUtiMedia */}
       <div
-        className={`absolute top-17 left-[1220px] w-60 z-100 border border-gray-200 backdrop-blur-2xl py-7 px-3 font-light text-xl text-white tracking-wider ${
+        className={`absolute top-17 left-[1000px] w-60 z-100 border border-gray-200 backdrop-blur-2xl py-7 px-3 font-light text-xl text-white tracking-wider ${
           toggle3 ? "block" : "hidden"
         }`}
       >
