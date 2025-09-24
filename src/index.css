@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: font1;
+  src: url(../public/font/D-DIN-Bold.9a5ce67e997fd030.woff2);
+}
+
+@font-face {
+  font-family: font2;
+  src: url(../public/font/D-DIN.e58c68e58b09fc0e.woff2);
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
