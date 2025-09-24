@@ -34,7 +34,7 @@ async function start() {
     console.warn("Index init warning:", err.message);
   }
   app.listen(PORT, () =>
-    console.log(`🚀 Server running at http://localhost:${PORT}`)
+    console.log(`🚀 Server running at https://nasa-project-theta.vercel.app/`)
   );
 }
 

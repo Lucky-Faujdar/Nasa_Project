@@ -46,8 +46,8 @@ const SearchBar = ({ addToHistory }) => {
         </button>
       </form>
 
-      {/* Search Results */}
-      <div className="grid gap-4 w-full max-w-4xl">
+      {/* Search Results - MODIFIED LINE BELOW */}
+      <div className="grid gap-4 w-full max-w-4xl max-h-[70vh] overflow-y-auto pr-2">
         {loading && <p className="text-gray-400">Searching...</p>}
         {!loading && results.length === 0 && query && (
           <p className="text-gray-400">No results found.</p>
