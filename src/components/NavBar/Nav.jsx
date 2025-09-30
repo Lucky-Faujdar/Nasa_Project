@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../../../public/galaxy.png";
-import svg from "../../assets/search.svg";
 
 const Nav = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const [toggle1, setToggle1] = useState(false);
-  const [toggle2, setToggle2] = useState(false);
-  const [toggle3, setToggle3] = useState(false);
 
   const ChevronDownIcon = () => (
     <svg
@@ -19,11 +16,7 @@ const Nav = () => {
       stroke="currentColor"
       className="w-4 h-4"
     >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="m19.5 8.25-7.5 7.5-7.5-7.5"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
     </svg>
   );
 
@@ -36,354 +29,177 @@ const Nav = () => {
       stroke="currentColor"
       className="w-4 h-4"
     >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="m4.5 15.75 7.5-7.5 7.5 7.5"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
     </svg>
   );
 
-  const handleDropdownToggle = (menu) => {
-    setOpenDropdown(openDropdown === menu ? null : menu);
-  };
-
   return (
-    <div>
-      <div className="absolute top-0 w-screen z-50 h-17 text-white flex items-center px-8 py-4 justify-between shadow-xl bg-gradient-to-br backdrop-blur-sm border-b-zinc-700 border-b-1 font-[font1] text-lg tracking-wide">
-        <div className="flex items-center gap-30 mr-20">
+    <div className="absolute top-0 w-screen z-50 bg-gradient-to-br backdrop-blur-sm text-white shadow-xl">
+      <div className="flex items-center justify-between px-6 py-4">
+        {/* Logo */}
+        <div className="w-10">
+          <img src={logo} alt="logo" />
+        </div>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-10 font-bold text-lg">
           {/* Explore */}
-          <button
-            onClick={() => {
-              handleDropdownToggle("explore"), setToggle1(!toggle1);
-            }}
-            className="flex items-center space-x-2 font-bold text-lg"
+          <div
+            className="relative"
+            onMouseEnter={() => setOpenDropdown("explore")}
+            onMouseLeave={() => setOpenDropdown(null)}
           >
-            <span>Explore</span>
-            {openDropdown === "explore" ? (
-              <ChevronUpIcon />
-            ) : (
-              <ChevronDownIcon />
-            )}
-          </button>
-
-          <div className="flex items-center">
-            <svg
-              className="w-5 h-5 absolute left-39 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns={svg}
+            <button className="flex items-center space-x-2">
+              <span>Explore</span>
+              {openDropdown === "explore" ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            </button>
+            <div
+              className={`absolute top-full left-0 mt-2 w-52 border border-gray-200 backdrop-blur-2xl py-4 px-4 text-xl tracking-wider ${
+                openDropdown === "explore" ? "block" : "hidden"
+              }`}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              ></path>
-            </svg>
-            <input
-              className="border-2 border-gray-500 rounded-lg pl-9 pr-4 py-1 scale-90 active:border-2 font-[font2] ml-[-100px]"
-              type="text"
-            />
+              <ul className="flex flex-col gap-2">
+                <a href="https://www.nasa.gov/" className="hover:text-red-500">Home</a>
+                <a href="https://www.nasa.gov/nasa-missions/" className="hover:text-red-500">Missions</a>
+                <a href="https://www.nasa.gov/humans-in-space/" className="hover:text-red-500">Humans in Space</a>
+              </ul>
+            </div>
           </div>
+
+          {/* News */}
+          <div
+            className="relative"
+            onMouseEnter={() => setOpenDropdown("News")}
+            onMouseLeave={() => setOpenDropdown(null)}
+          >
+            <button className="flex items-center space-x-2">
+              <span>News & Event</span>
+              {openDropdown === "News" ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            </button>
+            <div
+              className={`absolute top-full right-0 mt-2 w-60 border border-gray-200 backdrop-blur-2xl py-4 px-3 text-xl ${
+                openDropdown === "News" ? "block" : "hidden"
+              }`}
+            >
+              <ul className="flex flex-col gap-2">
+                <a href="https://www.nasa.gov/2025-news-releases/" className="hover:text-red-600">News Releases</a>
+                <a href="https://www.nasa.gov/news/recently-published/" className="hover:text-red-600">Recently Published</a>
+                <a href="https://plus.nasa.gov/series/" className="hover:text-red-600">Video Series on NASA+</a>
+              </ul>
+            </div>
+          </div>
+
+          {/* Media */}
+          <div
+            className="relative"
+            onMouseEnter={() => setOpenDropdown("Media")}
+            onMouseLeave={() => setOpenDropdown(null)}
+          >
+            <button className="flex items-center space-x-2">
+              <span>MultiMedia</span>
+              {openDropdown === "Media" ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            </button>
+            <div
+              className={`absolute top-full right-0 mt-2 w-60 border border-gray-200 backdrop-blur-2xl py-4 px-3 text-xl ${
+                openDropdown === "Media" ? "block" : "hidden"
+              }`}
+            >
+              <ul className="flex flex-col gap-2">
+                <a href="https://plus.nasa.gov/" className="hover:text-red-500">NASA+</a>
+                <a href="https://www.nasa.gov/images/" className="hover:text-red-500">Images</a>
+                <a href="https://www.nasa.gov/live" className="hover:text-red-500">NASA Live</a>
+              </ul>
+            </div>
+          </div>
+
+          <button
+            className="border border-white px-4 py-1 rounded-lg hover:bg-red-800"
+            onClick={() => navigate("/login")}
+          >
+            Get Started
+          </button>
         </div>
 
-        {/* LOGO */}
-        <div id="logo" className="w-10  text-white">
-          <img src={logo} alt="" />
-        </div>
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-white"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? "✖" : "☰"}
+        </button>
+      </div>
 
-        <div className="flex gap-20">
-          {/* News & Event */}
-          <button
-            onClick={() => {
-              handleDropdownToggle("News"), setToggle2(!toggle2);
-            }}
-            className="flex items-center space-x-2 font-bold text-lg"
-          >
-            <span>News & Event</span>
-            {openDropdown === "News" ? <ChevronUpIcon /> : <ChevronDownIcon />}
-          </button>
+      {/* Mobile Dropdown Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden flex flex-col gap-4 px-6 py-4 border-t border-gray-600">
+          {/* Mobile Explore */}
+          <div>
+            <button
+              onClick={() =>
+                setOpenDropdown(openDropdown === "explore" ? null : "explore")
+              }
+              className="flex items-center justify-between w-full"
+            >
+              <span>Explore</span>
+              {openDropdown === "explore" ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            </button>
+            {openDropdown === "explore" && (
+              <ul className="flex flex-col gap-2 mt-2 pl-4">
+                <a href="https://www.nasa.gov/">Home</a>
+                <a href="https://www.nasa.gov/nasa-missions/">Missions</a>
+                <a href="https://www.nasa.gov/humans-in-space/">Humans in Space</a>
+              </ul>
+            )}
+          </div>
 
-          {/* MultiMedia */}
-          <button
-            onClick={() => {
-              handleDropdownToggle("Media"), setToggle3(!toggle3);
-            }}
-            className="flex items-center space-x-2 font-bold text-lg"
-          >
-            <span>MultiMedia</span>
-            {openDropdown === "Media" ? <ChevronUpIcon /> : <ChevronDownIcon />}
-          </button>
+          {/* Mobile News */}
+          <div>
+            <button
+              onClick={() =>
+                setOpenDropdown(openDropdown === "News" ? null : "News")
+              }
+              className="flex items-center justify-between w-full"
+            >
+              <span>News & Event</span>
+              {openDropdown === "News" ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            </button>
+            {openDropdown === "News" && (
+              <ul className="flex flex-col gap-2 mt-2 pl-4">
+                <a href="https://www.nasa.gov/2025-news-releases/">News Releases</a>
+                <a href="https://www.nasa.gov/news/recently-published/">Recently Published</a>
+                <a href="https://plus.nasa.gov/series/">Video Series on NASA+</a>
+              </ul>
+            )}
+          </div>
 
-          {/* Login */}
+          {/* Mobile Media */}
+          <div>
+            <button
+              onClick={() =>
+                setOpenDropdown(openDropdown === "Media" ? null : "Media")
+              }
+              className="flex items-center justify-between w-full"
+            >
+              <span>MultiMedia</span>
+              {openDropdown === "Media" ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            </button>
+            {openDropdown === "Media" && (
+              <ul className="flex flex-col gap-2 mt-2 pl-4">
+                <a href="https://plus.nasa.gov/">NASA+</a>
+                <a href="https://www.nasa.gov/images/">Images</a>
+                <a href="https://www.nasa.gov/live">NASA Live</a>
+              </ul>
+            )}
+          </div>
+
           <button
-            className="border-1 border-white px-4 py-1 rounded-lg hover:bg-red-800"
+            className="border border-white px-4 py-1 rounded-lg hover:bg-red-800 w-fit"
             onClick={() => navigate("/login")}
           >
             Login
           </button>
         </div>
-      </div>
-
-      {/* Explore */}
-      <div
-        className={`absolute top-17 left-8 w-50 z-100 font-[font2] border border-gray-200 backdrop-blur-2xl text-white py-7 px-4 font-light text-xl tracking-wider ${
-          toggle1 ? "block" : "hidden"
-        }`}
-      >
-        <ul className="flex flex-col gap-2">
-          <a
-            href="https://www.nasa.gov/"
-            className="hover:text-red-500 hover:scale-105 transition-transform duration-200"
-          >
-            <span>Home</span>
-          </a>
-          <a
-            href="https://www.nasa.gov/nasa-missions/"
-            className="hover:text-red-500 hover:scale-105 transition-transform duration-200"
-          >
-            <span>Missions</span>
-          </a>
-          <a
-            href="https://www.nasa.gov/humans-in-space/"
-            className="hover:text-red-500 hover:scale-105 transition-transform duration-200"
-          >
-            <span>Humans in Space</span>
-          </a>
-          <a
-            href="https://science.nasa.gov/earth/"
-            className="hover:text-red-500 hover:scale-105 transition-transform duration-200"
-          >
-            <span>Earth</span>
-          </a>
-          <a
-            href="https://science.nasa.gov/solar-system/"
-            className="hover:text-red-500 hover:scale-105 transition-transform duration-200"
-          >
-            <span>The Solar System</span>
-          </a>
-          <a
-            href="https://science.nasa.gov/universe/"
-            className="hover:text-red-500 hover:scale-105 transition-transform duration-200"
-          >
-            <span>The Universe</span>
-          </a>
-          <a
-            href="https://science.nasa.gov/"
-            className="hover:text-red-500 hover:scale-105 transition-transform duration-200"
-          >
-            <span>Science</span>
-          </a>
-          <a
-            href="https://www.nasa.gov/aeronautics/"
-            className="hover:text-red-500 hover:scale-105 transition-transform duration-200"
-          >
-            <span>Aeronautics</span>
-          </a>
-          <a
-            href="https://www.nasa.gov/technology/"
-            className="hover:text-red-500 hover:scale-105 transition-transform duration-200"
-          >
-            <span>Technology</span>
-          </a>
-          <a
-            href="https://www.nasa.gov/learning-resources/"
-            className="hover:text-red-500 hover:scale-105 transition-transform duration-200"
-          >
-            <span>Learning Resources</span>
-          </a>
-        </ul>
-      </div>
-
-      {/* News and Event */}
-      <div
-        className={`absolute top-17 left-[900px] w-60 z-100 border border-gray-200 backdrop-blur-2xl py-7 px-3 font-light text-xl text-white tracking-wider ${
-          toggle2 ? "block" : "hidden"
-        }`}
-      >
-        <ul className="flex flex-col gap-2">
-          <li>
-            <a
-              href="https://www.nasa.gov/2025-news-releases/"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>News Releases</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/news/recently-published/"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>Recently Published</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://plus.nasa.gov/series/"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>Video Series on NASA+</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/podcasts-and-audio/"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>Podcasts &amp; Audio</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/nasa-blogs/"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>Blogs</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/newsletters/"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>Newsletters</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/social-media/"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>Social Media</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/news/media-contacts/"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>Media Resources</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/events"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>Events</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/event-type/launch-schedule/"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>Upcoming Launches &amp; Landings</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/nasa-virtual-guest-program/"
-              className="hover:text-red-600 transition-colors duration-200"
-            >
-              <span>Virtual Guest Program</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      {/* MUtiMedia */}
-      <div
-        className={`absolute top-17 left-[1000px] w-60 z-100 border border-gray-200 backdrop-blur-2xl py-7 px-3 font-light text-xl text-white tracking-wider ${
-          toggle3 ? "block" : "hidden"
-        }`}
-      >
-        <ul className="flex flex-col gap-2">
-          <li>
-            <a
-              href="https://plus.nasa.gov/"
-              className="hover:text-red-500 transition-colors duration-200"
-            >
-              <span>NASA+</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/images/"
-              className="hover:text-red-500 transition-colors duration-200"
-            >
-              <span>Images</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/live"
-              className="hover:text-red-500 transition-colors duration-200"
-            >
-              <span>NASA Live</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/apps/"
-              className="hover:text-red-500 transition-colors duration-200"
-            >
-              <span>NASA Apps</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/podcasts/"
-              className="hover:text-red-500 transition-colors duration-200"
-            >
-              <span>Podcasts</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/image-of-the-day/"
-              className="hover:text-red-500 transition-colors duration-200"
-            >
-              <span>Image of the Day</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/ebooks/"
-              className="hover:text-red-500 transition-colors duration-200"
-            >
-              <span>e-Books</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/interactives/"
-              className="hover:text-red-500 transition-colors duration-200"
-            >
-              <span>Interactives</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/learning-resources/search/?terms=8058%2C8059%2C8061%2C8062%2C8068"
-              className="hover:text-red-500 transition-colors duration-200"
-            >
-              <span>STEM Multimedia</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.nasa.gov/nasa-brand-center/"
-              className="hover:text-red-500 transition-colors duration-200"
-            >
-              <span>NASA Brand &amp; Usage Guidelines</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+      )}
     </div>
   );
 };

@@ -36,22 +36,22 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-full relative overflow-hidden">
+    <div className="w-full h-screen relative overflow-hidden">
       {/* Background */}
-      <div className="w-full top-0 absolute object-cover z-0">
+      <div className="absolute inset-0 z-0">
         <EarthVideo />
       </div>
 
-      {/* frontground */}
-      <div className="flex z-10 top-0 left-20 absolute items-center justify-start w-screen h-screen">
+      {/* Foreground */}
+      <div className="relative top-5 z-10 flex items-center justify-center w-full h-full px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-md overflow-hidden bg-zink-900 border-zinc-700 border-2 bg-opacity-50 shadow-xl bg-gradient-to-br backdrop-filter backdrop-blur-xl rounded-2xl"
+          className="w-full max-w-md bg-zinc-900/70 border border-zinc-700 shadow-xl rounded-2xl backdrop-blur-xl"
         >
-          <div className="p-8">
-            <h2 className="text-3xl font-bold mb-6 text-center text-white bg-clip-text">
+          <div className="p-6 sm:p-8">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-white">
               Welcome Back
             </h2>
 
@@ -78,7 +78,7 @@ const Login = () => {
                 </label>
                 <select
                   {...register("role", { required: true })}
-                  className="w-full px-3 py-2 border-1 bg-zinc-800 text-white border-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full px-3 py-2 bg-zinc-800 text-white border border-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Choose Role</option>
                   <option value="Public">Public</option>
@@ -87,10 +87,10 @@ const Login = () => {
                 </select>
               </div>
 
-              <div className="flex items-center mb-6 ">
+              <div className="flex items-center justify-between mb-6">
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-white  hover:underline"
+                  className="text-sm text-white hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -99,8 +99,7 @@ const Login = () => {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-3 px-4 bg-gradient-to-br from-red-950 via-blue to-red-900 text-white font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2
-              focus:ring-offset-white transition duration-200"
+                className="w-full py-3 px-4 bg-gradient-to-br from-red-950 via-blue to-red-900 text-white font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition duration-200"
                 type="submit"
                 disabled={isLoading}
               >
@@ -113,10 +112,10 @@ const Login = () => {
             </form>
           </div>
 
-          <div className="px-8 py-4 bg-black bg-opacity-50 flex justify-center">
-            <p className="text-sm text-white">
-              Don't have an account?{" "}
-              <Link to="/signup" className="text-red-900 hover:underline">
+          <div className="px-6 py-4 bg-black/60 flex justify-center rounded-b-2xl">
+            <p className="text-sm text-white text-center">
+              Don&apos;t have an account?{" "}
+              <Link to="/signup" className="text-red-400 hover:underline">
                 Sign up
               </Link>
             </p>
