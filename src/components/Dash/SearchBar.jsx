@@ -32,7 +32,7 @@ const SearchBar = ({ addToHistory }) => {
       {/* Search Input */}
       <form
         onSubmit={handleSearch}
-        className="relative w-full max-w-2xl mb-6"
+        className="relative w-full max-w-2xl bottom-50"
       >
         <input
           type="text"

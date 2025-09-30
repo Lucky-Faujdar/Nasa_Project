@@ -104,6 +104,7 @@ const Sidebar = ({ user, historyItems = [], onSelectHistory }) => {
           >
             <FiZap className="mr-3" /> Gamified Learning
           </Link>
+          
         </div>
       </div>
     </aside>
