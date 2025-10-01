@@ -13,7 +13,7 @@ const SearchBar = ({ addToHistory }) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/search?q=${encodeURIComponent(query)}&limit=10`
+        `https://nasa-project-6byr.onrender.com/api/search?q=${encodeURIComponent(query)}&limit=10`
       );
       const data = await res.json();
       setResults(data.results || []);
