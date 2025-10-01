@@ -2,8 +2,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite' 
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  // The 'server' configuration block is not needed and has been removed.
+  plugins: [react() , tailwindcss(),],
+  server: {
+    allowedHosts: [
+      // Add the Render URL of your deployed frontend
+      'nasa-project-6byr.onrender.com' 
+    ],
+  },
 });
