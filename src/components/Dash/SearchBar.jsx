@@ -15,8 +15,17 @@ const SearchBar = ({ addToHistory }) => {
       const res = await fetch(
         `/api/search?q=${encodeURIComponent(query)}&limit=10`
       );
-      const data = await res.json();
-      setResults(data.results || []);
+
+      // ✅ Check response type before parsing
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await res.json();
+        setResults(data.results || []);
+      } else {
+        const text = await res.text();
+        console.error("Expected JSON, but got:", text.slice(0, 200));
+        setResults([]);
+      }
 
       // ✅ Add search to history
       addToHistory(query);
@@ -46,7 +55,7 @@ const SearchBar = ({ addToHistory }) => {
         </button>
       </form>
 
-      {/* Search Results - MODIFIED LINE BELOW */}
+      {/* Search Results */}
       <div className="grid gap-4 w-full max-w-4xl max-h-[70vh] overflow-y-auto pr-2">
         {loading && <p className="text-gray-400">Searching...</p>}
         {!loading && results.length === 0 && query && (
