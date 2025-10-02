@@ -14,7 +14,6 @@ import NasaData from "./models/NasaData.js";
 const app = express();
 const PORT = process.env.PORT || 5000;
 const HOST = "0.0.0.0";
-
 // --- A helper to get the current directory path ---
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,7 +23,7 @@ app.use(express.json());
 // If frontend & backend are on different domains in dev, enable CORS
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173", // Vite default
+    origin: process.env.CORS_ORIGIN || "https://nasa-project-6byr.onrender.com", // Vite default
     credentials: true,
   })
 );
@@ -37,11 +36,11 @@ app.use("/api/search", searchRoute);
 app.use("/api/deepai", deepaiRoute);
 
 // --- 2. SERVE STATIC FRONTEND FILES ---
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 
 // --- 3. CATCH-ALL ROUTE (must come last) ---
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
 });
 
 // --- Start server after connecting to DB ---
@@ -56,8 +55,9 @@ async function start() {
   }
 
   app.listen(PORT, HOST, () =>
-    console.log(`🚀 Server running at http://${HOST}:${PORT}`)
+    console.log(`🚀 Server running at http://localhost:${PORT}`)
   );
 }
 
 start();
+ 
