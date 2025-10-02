@@ -23,7 +23,7 @@ app.use(express.json());
 // --- CORS ---
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "*", // Allow all temporarily for testing
+    origin: ["http://localhost:5173", "https://nasa-project-6byr.onrender.com"], // Allow all temporarily for testing
     credentials: true,
   })
 );
