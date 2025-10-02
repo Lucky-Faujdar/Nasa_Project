@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
 const SearchBar = ({ addToHistory }) => {
@@ -6,7 +6,7 @@ const SearchBar = ({ addToHistory }) => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // ✅ Minimal change: use full backend URL depending on environment
+  // ✅ Minimal addition: dynamic backend URL
   const BASE_URL =
     import.meta.env.MODE === "development"
       ? "http://localhost:5000"
@@ -19,7 +19,7 @@ const SearchBar = ({ addToHistory }) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `${BASE_URL}/api/search?q=${encodeURIComponent(query)}&limit=10`
+        `${BASE_URL}/api/search/search?q=${encodeURIComponent(query)}&limit=10`
       );
 
       // ✅ Check response type before parsing
@@ -37,7 +37,6 @@ const SearchBar = ({ addToHistory }) => {
       addToHistory(query);
     } catch (err) {
       console.error("Search error:", err);
-      setResults([]);
     } finally {
       setLoading(false);
     }
