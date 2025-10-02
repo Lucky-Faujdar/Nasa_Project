@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import { FiSearch } from "react-icons/fi";
-
-// ✅ Update BASE_URL for local and deployed backend
-const BASE_URL =
-  import.meta.env.MODE === "development"
-    ? "http://localhost:5000"
-    : "https://nasa-project-6byr.onrender.com";
 
 const SearchBar = ({ addToHistory }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // ✅ Minimal change: use full backend URL depending on environment
+  const BASE_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:5000"
+      : "https://nasa-project-6byr.onrender.com";
 
   const handleSearch = async (e) => {
     e.preventDefault();
