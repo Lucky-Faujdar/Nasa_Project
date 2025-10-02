@@ -11,8 +11,8 @@ export default defineConfig({
     },
     allowedHosts: [
       // Add the Render URL of your deployed frontend
-      'nasa-project-6byr.onrender.com',
-      'localhost'
+      'nasa-project-6byr.onrender.com' 
     ],
+
   },
 });

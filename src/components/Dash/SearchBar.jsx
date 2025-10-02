@@ -19,8 +19,8 @@ const SearchBar = ({ addToHistory }) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `${BASE_URL}/api/search/search?q=${encodeURIComponent(query)}&limit=10`
-      );
+           `${BASE_URL}/api/search?q=${encodeURIComponent(query)}&limit=10`
+        );
 
       // ✅ Check response type before parsing
       const contentType = res.headers.get("content-type");
