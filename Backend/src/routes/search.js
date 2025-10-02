@@ -13,28 +13,29 @@ router.get("/", async (req, res) => {
     const limit = Math.min(100, parseInt(req.query.limit || "12"));
     const skip = (page - 1) * limit;
 
+    console.log("Search query:", q, "Page:", page, "Limit:", limit);
+
+    let results = [];
+    let total = 0;
+
     if (q) {
-      // 🔎 1. Try MongoDB text search
-      const findQuery = { $text: { $search: q } };
-      let results = await NasaData.find(findQuery, {
-        score: { $meta: "textScore" },
-      })
-        .sort({ score: { $meta: "textScore" } })
-        .skip(skip)
-        .limit(limit)
-        .lean();
+      // 🔹 MongoDB text search with fallback
+      try {
+        results = await NasaData.find({ $text: { $search: q } }, { score: { $meta: "textScore" } })
+          .sort({ score: { $meta: "textScore" } })
+          .skip(skip)
+          .limit(limit)
+          .lean();
 
-      let total = await NasaData.countDocuments(findQuery);
+        total = await NasaData.countDocuments({ $text: { $search: q } });
+      } catch (e) {
+        console.warn("Text search failed, fallback to regex:", e.message);
+      }
 
-      // 🔎 2. Fallback: regex search if no text results
+      // 🔹 Regex search fallback
       if (results.length === 0) {
-        const regex = new RegExp(
-          q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-          "i"
-        );
-        const fallbackQuery = {
-          $or: [{ title: regex }, { explanation: regex }],
-        };
+        const regex = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+        const fallbackQuery = { $or: [{ title: regex }, { explanation: regex }] };
         results = await NasaData.find(fallbackQuery)
           .skip(skip)
           .limit(limit)
@@ -42,37 +43,36 @@ router.get("/", async (req, res) => {
         total = await NasaData.countDocuments(fallbackQuery);
       }
 
-      // 🔎 3. FINAL fallback: call NASA API if DB is empty
+      // 🔹 NASA API fallback
       if (results.length === 0) {
-        const nasaRes = await axios.get(
-          `https://images-api.nasa.gov/search?q=${encodeURIComponent(
-            q
-          )}&media_type=image`
-        );
-
-        results = nasaRes.data.collection.items.slice(0, limit).map((item) => ({
-          title: item.data[0].title,
-          explanation: item.data[0].description,
-          url: item.links?.[0]?.href,
-          media_type: "image",
-        }));
-
-        total = results.length;
+        try {
+          const nasaRes = await axios.get(
+            `https://images-api.nasa.gov/search?q=${encodeURIComponent(q)}&media_type=image`
+          );
+          results = nasaRes.data.collection.items.slice(0, limit).map((item) => ({
+            title: item.data[0].title,
+            explanation: item.data[0].description,
+            url: item.links?.[0]?.href,
+            media_type: "image",
+          }));
+          total = results.length;
+        } catch (e) {
+          console.error("NASA API fallback failed:", e.message);
+        }
       }
-
-      return res.json({ total, page, limit, results });
     } else {
-      // 📌 No query: return latest items from DB
-      const results = await NasaData.find()
+      // No query: latest items from DB
+      results = await NasaData.find()
         .sort({ date: -1 })
         .skip(skip)
         .limit(limit)
         .lean();
-      const total = await NasaData.countDocuments();
-      return res.json({ total, page, limit, results });
+      total = await NasaData.countDocuments();
     }
+
+    return res.json({ total, page, limit, results });
   } catch (err) {
-    console.error("Search API error:", err.message);
+    console.error("Search API error:", err);
     return res.status(500).json({ error: "Server error" });
   }
 });
