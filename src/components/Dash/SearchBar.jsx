@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
+// ✅ Update BASE_URL for local and deployed backend
+const BASE_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : "https://nasa-project-6byr.onrender.com";
+
 const SearchBar = ({ addToHistory }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -13,7 +19,7 @@ const SearchBar = ({ addToHistory }) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/search?q=${encodeURIComponent(query)}&limit=10`
+        `${BASE_URL}/api/search?q=${encodeURIComponent(query)}&limit=10`
       );
 
       // ✅ Check response type before parsing
@@ -31,6 +37,7 @@ const SearchBar = ({ addToHistory }) => {
       addToHistory(query);
     } catch (err) {
       console.error("Search error:", err);
+      setResults([]);
     } finally {
       setLoading(false);
     }
